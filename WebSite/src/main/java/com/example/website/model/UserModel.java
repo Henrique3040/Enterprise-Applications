@@ -9,7 +9,7 @@ import java.util.List;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String username;
     private String email;
@@ -18,11 +18,11 @@ public class UserModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationModel> reservations = new ArrayList<ReservationModel>() ;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
