@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityCinfig {
+public class WebSecurityConfig {
 
     @Autowired
     private UserService userService;
@@ -44,16 +45,17 @@ public class WebSecurityCinfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .formLogin(httpForm -> {
-                    httpForm.loginPage("/login").permitAll();
-                })
 
-                .authorizeRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/register").permitAll();
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(httpForm -> {
+                    httpForm.loginPage("/login" ).permitAll();
+                    httpForm.defaultSuccessUrl("/catalogus");
+                })
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/register", "/css/**", "/js/**").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 })
-
                 .build();
 
     }

@@ -37,9 +37,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public UserModel registerUser(UserModel user) {
 
-    }
 
 
 

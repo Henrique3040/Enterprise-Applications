@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogus - Verhuur Platform</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Welkom op het verhuur platform</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/catalogus" class="active">Catalogus</a>
+    <a href="/cart">Winkelmandje</a>
+  </nav>
+</header>
+<main>
+  <h2>Catalogus</h2>
+  <ul>
+    <li th:each="item : ${items}">
+      <h3 th:text="${item.name}">Productnaam</h3>
+      <p th:text="${item.description}">Beschrijving</p>
+      <p>Categorie: <span th:text="${item.categoryName}">Categorie</span></p>
+      <p>Beschikbaar: <span th:text="${item.available}">Ja/Nee</span></p>
+      <button th:onclick="'/cart/add/' + ${item.id}">Voeg toe aan winkelmandje</button>
+    </li>
+  </ul>
+</main>
+<footer>
+  <p>&copy; 2024 Verhuur Platform</p>
+</footer>
+</body>
+</html>

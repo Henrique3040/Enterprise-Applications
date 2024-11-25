@@ -32,7 +32,7 @@ public class ItemService {
     *
     * */
     public List<ItemModel> getItemByCategory(String category) {
-        return itemRepository.findByCategory(category);
+        return itemRepository.findByCategory_Name(category);
     }
 
 }

@@ -35,7 +35,7 @@ public class CartService {
     @Transactional
     public void addItemToCart(Long userId, Long productId) {
 
-        CartModel cart = cartRepository.findByCustomerId(userId).orElse(null);
+        CartModel cart = cartRepository.findByUser_Id(userId).orElse(null);
 
         if (cart == null) {
             cart = new CartModel();
@@ -64,7 +64,7 @@ public class CartService {
         * eerst de items de cart omzeten naar reservation
         *
         * */
-        CartModel cart = cartRepository.findByCustomerId(userId).orElse(null);
+        CartModel cart = cartRepository.findByUser_Id(userId).orElse(null);
         if (cart == null || cart.getItems().isEmpty()) {
 
             throw new IllegalArgumentException("Cart is empty");

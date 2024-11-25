@@ -1,8 +1,10 @@
 package com.example.website.controller;
 
+
 import com.example.website.model.ItemModel;
 import com.example.website.service.ItemService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -19,8 +21,10 @@ public class ItemController {
     *
     * */
     @GetMapping("/items")
-    public List<ItemModel> getAllItems() {
-     return itemService.getAllItems();
+    public String getAllItems(Model model) {
+
+     model.addAttribute("items", itemService.getAllItems());
+     return "catalogus";
     }
 
 

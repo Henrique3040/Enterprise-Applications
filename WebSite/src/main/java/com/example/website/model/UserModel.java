@@ -1,6 +1,7 @@
 package com.example.website.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,12 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Username is required")
     private String username;
-    private String email;
+    @NotBlank(message = "Password is required")
     private String password;
+    @NotBlank(message = "Email is required")
+    private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationModel> reservations = new ArrayList<ReservationModel>() ;
