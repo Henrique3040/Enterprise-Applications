@@ -21,24 +21,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<UserModel> user = userRepository.findByUsername(username);
+        UserModel user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if(user.isPresent()) {
-            var userObj = user.get();
-            return User.builder()
-                    .username(userObj.getUsername())
-                    .password(userObj.getPassword())
-                    .build();
-
-        }else{
-            throw new UsernameNotFoundException(username);
-        }
-
+        return new CustomUserDetails(user);
 
     }
-
-
-
-
 
 }
