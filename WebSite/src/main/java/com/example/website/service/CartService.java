@@ -7,6 +7,7 @@ import com.example.website.model.UserModel;
 import com.example.website.repository.CartRepository;
 import com.example.website.repository.ItemRepository;
 import com.example.website.repository.ReservationRepository;
+import com.example.website.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,14 @@ public class CartService {
     private CartRepository cartRepository;
     private ItemRepository itemRepository;
     private ReservationRepository reservationRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public CartService(CartRepository cartRepository, ItemRepository itemRepository, ReservationRepository reservationRepository) {
+    public CartService(CartRepository cartRepository, ItemRepository itemRepository, ReservationRepository reservationRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
         this.itemRepository = itemRepository;
         this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -39,7 +42,7 @@ public class CartService {
 
         if (cart == null) {
             cart = new CartModel();
-            UserModel user = new UserModel();
+            UserModel user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found" + userId));
             cart.setUser(user);
             cart.setItems(new ArrayList<>());
             cartRepository.save(cart);

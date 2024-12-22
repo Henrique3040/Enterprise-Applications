@@ -11,11 +11,17 @@ import java.util.List;
 @Service
 public class ItemService {
 
+    @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository, CategoryRepository categoryRepository) {}
+    public ItemService(ItemRepository itemRepository, CategoryRepository categoryRepository) {
+        this.itemRepository = itemRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     /*
     * Haal alle items van uit de database

@@ -3,6 +3,8 @@ package com.example.website.controller;
 
 import com.example.website.model.UserModel;
 import com.example.website.service.CartService;
+import com.example.website.service.CustomUserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cart")
 public class CartController {
 
+    @Autowired
     private CartService cartService;
 
 
@@ -25,13 +28,12 @@ public class CartController {
     * */
 
     @GetMapping
-    public String viewCart(Model model, @AuthenticationPrincipal UserModel user) {
+    public String viewCart( UserModel user) {
 
         if (user == null) {
             return "redirect:/login";
         }
-        cartService.checkoutCart(user.getId());
-        model.addAttribute("message", "Je reservatie is succesvol geplaatst!");
+
         return "cart";
     }
 
@@ -42,9 +44,16 @@ public class CartController {
     * End point om items in de cart toevoegen
     * */
 
-    @PostMapping("/cart/add/{itemId}")
-    public String addItem(@PathVariable Long itemId, UserModel user ) {
+    @PostMapping("/add/{itemId}")
+    public String addItem(@PathVariable Long itemId, @AuthenticationPrincipal CustomUserDetails userDetails ) {
+
+        if (userDetails == null) {
+            throw new IllegalArgumentException("User must be logged in to add items to the cart.");
+        }
+
+        UserModel user = userDetails.getUser();
         cartService.addItemToCart(user.getId(), itemId);
+
         return "redirect:/cart";
     }
 

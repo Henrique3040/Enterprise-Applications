@@ -11,7 +11,7 @@
   <h1>Welkom op het verhuur platform</h1>
   <nav>
     <a href="/">Home</a>
-    <a href="/catalogus" class="active">Catalogus</a>
+    <a href="/items" class="active">Catalogus</a>
     <a href="/cart">Winkelmandje</a>
   </nav>
 </header>
@@ -21,9 +21,12 @@
     <li th:each="item : ${items}">
       <h3 th:text="${item.name}">Productnaam</h3>
       <p th:text="${item.description}">Beschrijving</p>
-      <p>Categorie: <span th:text="${item.categoryName}">Categorie</span></p>
+      <p>Categorie: <span th:text="${item.category.getName()}">Categorie</span></p>
       <p>Beschikbaar: <span th:text="${item.available}">Ja/Nee</span></p>
-      <button th:onclick="'/cart/add/' + ${item.id}">Voeg toe aan winkelmandje</button>
+      <form th:action="@{/cart/add/{itemId}(itemId=${item.id})}" method="post">
+
+        <button type="submit">Voeg toe aan winkelmandje</button>
+      </form>
     </li>
   </ul>
 </main>
