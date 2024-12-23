@@ -1,5 +1,6 @@
 package com.example.website.service;
 
+import com.example.website.model.CategoryModel;
 import com.example.website.model.ItemModel;
 import com.example.website.repository.CategoryRepository;
 import com.example.website.repository.ItemRepository;
@@ -39,6 +40,14 @@ public class ItemService {
     * */
     public List<ItemModel> getItemByCategory(String category) {
         return itemRepository.findByCategory_Name(category);
+    }
+
+    /*
+    *
+    * Hal al producten met een bapaalde category
+    * */
+    public List<CategoryModel> getAllCategories() {
+        return categoryRepository.findAll();
     }
 
 }

@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 @Service
 public class CartService {
 
-    private CartRepository cartRepository;
-    private ItemRepository itemRepository;
-    private ReservationRepository reservationRepository;
-    private UserRepository userRepository;
+    private final CartRepository cartRepository;
+    private final ItemRepository itemRepository;
+    private final ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public CartService(CartRepository cartRepository, ItemRepository itemRepository, ReservationRepository reservationRepository, UserRepository userRepository) {
@@ -32,6 +32,22 @@ public class CartService {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
     }
+
+    public List<ItemModel> getCartItemsByUserId(Long userId) {
+        // Find the cart or create one if it doesn't exist
+        CartModel cart = cartRepository.findByUser_Id(userId).orElseGet(() -> {
+            CartModel newCart = new CartModel();
+            UserModel user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + userId));
+            newCart.setUser(user);
+            newCart.setItems(new ArrayList<>());
+            return cartRepository.save(newCart);
+        });
+
+        return cart.getItems();
+    }
+
+
 
 
 

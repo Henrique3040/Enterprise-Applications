@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class ItemController {
 
-    private ItemService itemService;
+    private final ItemService itemService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -30,6 +30,7 @@ public class ItemController {
 
      model.addAttribute("items", itemService.getAllItems());
      List<ItemModel> items = itemService.getAllItems();
+     model.addAttribute("categories", itemService.getAllCategories());
      System.out.println("Retrieved items: " + items);
      return "catalogus";
     }
@@ -40,9 +41,16 @@ public class ItemController {
     * End point om items per specifieke category te aanroepen
     *
     * */
-    @GetMapping("/items/category/{category}")
-    public List<ItemModel> getItemsByCategory(String category) {
-        return itemService.getItemByCategory(category);
+    @GetMapping("/items/category")
+    public String getItemsByCategory(String category, Model model) {
+        if (category == null || category.isEmpty()) {
+            model.addAttribute("items", itemService.getAllItems());
+        } else {
+            model.addAttribute("items", itemService.getItemByCategory(category));
+        }
+        model.addAttribute("categories", itemService.getAllCategories());
+        model.addAttribute("selectedCategory", category);
+        return "catalogus";
     }
 
 }

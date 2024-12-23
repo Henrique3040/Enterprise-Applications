@@ -17,14 +17,27 @@
 </header>
 <main>
   <h2>Catalogus</h2>
+  <form th:action="@{/items/category}" method="get">
+    <label for="category">Filter op categorie:</label>
+    <select name="category" id="category" onchange="this.form.submit()">
+      <option value="" th:selected="${selectedCategory == null}">Alle categorieën</option>
+      <option th:each="category : ${categories}"
+              th:value="${category.name}"
+              th:text="${category.name}"
+              th:selected="${selectedCategory == category.name}">
+        Category
+      </option>
+    </select>
+  </form>
+
+  <!-- Items list -->
   <ul>
     <li th:each="item : ${items}">
       <h3 th:text="${item.name}">Productnaam</h3>
       <p th:text="${item.description}">Beschrijving</p>
-      <p>Categorie: <span th:text="${item.category.getName()}">Categorie</span></p>
+      <p>Categorie: <span th:text="${item.category.name}">Categorie</span></p>
       <p>Beschikbaar: <span th:text="${item.available}">Ja/Nee</span></p>
       <form th:action="@{/cart/add/{itemId}(itemId=${item.id})}" method="post">
-
         <button type="submit">Voeg toe aan winkelmandje</button>
       </form>
     </li>

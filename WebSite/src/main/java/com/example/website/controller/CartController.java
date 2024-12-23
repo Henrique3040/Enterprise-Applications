@@ -1,6 +1,7 @@
 package com.example.website.controller;
 
 
+import com.example.website.model.ItemModel;
 import com.example.website.model.UserModel;
 import com.example.website.service.CartService;
 import com.example.website.service.CustomUserDetails;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -28,12 +31,16 @@ public class CartController {
     * */
 
     @GetMapping
-    public String viewCart( UserModel user) {
+    public String viewCart( @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 
-        if (user == null) {
+        if (userDetails == null) {
             return "redirect:/login";
         }
 
+        // Fetch the cart items for the logged-in user
+        UserModel user = userDetails.getUser();
+        List<ItemModel> cartItems = cartService.getCartItemsByUserId(user.getId());
+        model.addAttribute("cartItems", cartItems);
         return "cart";
     }
 
