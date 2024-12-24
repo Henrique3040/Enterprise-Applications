@@ -2,9 +2,11 @@ package com.example.website.controller;
 
 
 import com.example.website.model.ItemModel;
+import com.example.website.model.ReservationModel;
 import com.example.website.model.UserModel;
 import com.example.website.service.CartService;
 import com.example.website.service.CustomUserDetails;
+import com.example.website.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +25,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private ReservationService reservationService;
 
 
     /*
@@ -69,11 +74,22 @@ public class CartController {
     *
     * end pointom items te reserveren
     * */
-    @PostMapping("/cart/checkout")
-    public String checkoutCart(UserModel user) {
+    @PostMapping("/checkout")
+    public String checkoutCart(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
+
+            UserModel user = userDetails.getUser();
             cartService.checkoutCart(user.getId());
-            return "redirect:/cart";
+
+            List<ReservationModel> reservations = reservationService.getReservation(user.getId());
+
+            model.addAttribute("reservations", reservations);
+
+            return "cofirmationPage";
     }
 
 

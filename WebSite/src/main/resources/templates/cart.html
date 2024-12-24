@@ -19,7 +19,7 @@
   <!-- Section for empty cart -->
   <div th:if="${cartItems != null and #lists.isEmpty(cartItems)}">
     <p>Je winkelmandje is leeg. Voeg items toe om door te gaan!</p>
-    <a href="/catalogus" style="text-decoration: none; color: blue;">Terug naar catalogus</a>
+    <a href="/items" style="text-decoration: none; color: blue;">Terug naar catalogus</a>
   </div>
 
   <!-- Section for cart with items -->
@@ -31,8 +31,9 @@
         <button th:onclick="'/cart/remove/' + ${item.id}">Verwijder</button>
       </li>
     </ul>
-    <button th:onclick="'/cart/checkout'" style="margin-top: 20px;">Bevestig Aankoop</button>
-  </div>
+    <form th:action="@{/cart/checkout}" method="post" style="margin-top: 20px;">
+      <button type="submit">Bevestig Aankoop</button>
+    </form>  </div>
 
 </div>
 </body>
