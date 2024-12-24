@@ -20,6 +20,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    /*
+    * Op dit gedeeldte maak ik gebruik van Bcrypt
+    * Bycrpt implementeert salting
+    * het provide een sterk bescherming tegen
+    * brute-force en rainbow table aanvallen
+    * ( functioneren als een voorgecompileerde database van
+    * wachtwoorden en de bijbehorende hashwaarden)
+    *
+    * */
+
+
+
     @Autowired
     private UserService userService;
 
