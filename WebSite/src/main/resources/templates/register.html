@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="register-container">
+  <h2>Register</h2>
+  <form id="registerForm" >
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <label for="password">Confirm Password:</label>
+      <input type="password" id="passwordcon" name="passwordcon" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+    </div>
+    <div>
+      <button type="submit" id="submit">Register</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
+<script>
+  const registerForm = document.getElementById("registerForm");
+  registerForm.addEventListener('submit', (event)=>{
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("passwordcon").value;
+    const email = document.getElementById("email").value;
+
+    const data ={
+      username,
+      password,
+      email
+    };
+
+    if (password === confirmPassword){
+      const jsonData = JSON.stringify(data);
+      console.log("Data being sent:", data);
+      fetch('/register', {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:jsonData
+      })
+              .then(response => {
+                if (response.ok) {
+                  alert("Registration successful!");
+                  window.location.href = "/login";
+                } else {
+                  alert("Registration failed. Please try again.");
+                }
+              })
+              .catch(error => {
+                alert("An error occurred. Please try again.");
+                console.error("Error:", error);
+              });
+    } else {
+      alert("Passwords do not match!");
+    }
+  });
+</script>

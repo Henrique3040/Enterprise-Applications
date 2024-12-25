@@ -10,5 +10,5 @@ public interface ItemRepository extends CrudRepository<ItemModel, Long> {
 
     public List<ItemModel> findAll();
 
-    public List<ItemModel> findByCategory(String category);
+    public List<ItemModel> findByCategory_Name(String category);
 }
