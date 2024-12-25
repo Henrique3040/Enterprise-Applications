@@ -33,6 +33,7 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
+
     public List<ItemModel> getCartItemsByUserId(Long userId) {
         // Find the cart or create one if it doesn't exist
         CartModel cart = cartRepository.findByUser_Id(userId).orElseGet(() -> {
@@ -76,6 +77,14 @@ public class CartService {
 
     }
 
+    /*
+    *
+    * Checkout functie
+    * plaats alle items van kaar in een reservetion model
+    * verwijdeert dan de itams van de kart
+    *
+    * */
+
     public void checkoutCart(Long userId) {
 
         /*
@@ -104,6 +113,30 @@ public class CartService {
         reservationRepository.saveAll(reservations);
 
         cart.getItems().clear();
+        cartRepository.save(cart);
+
+    }
+
+
+    public void eraseItem(Long productId, Long userId) {
+        CartModel cart = cartRepository.findByUser_Id(userId).orElse(null);
+        if (cart == null || cart.getItems().isEmpty()) {
+            throw new IllegalArgumentException("Cart is empty");
+        }
+
+        System.out.println("Items in cart: " + cart.getItems());
+        System.out.println("Attempting to remove item with ID: " + productId);
+
+
+        // Controleer of het item aanwezig is
+        boolean itemExists = cart.getItems().stream()
+                .anyMatch(item -> item.getId().equals(productId));
+        if (!itemExists) {
+            throw new IllegalArgumentException("Item not found in cart");
+        }
+
+        // Verwijder het item en sla de wijzigingen op
+        cart.getItems().removeIf(item -> item.getId().equals(productId));
         cartRepository.save(cart);
 
     }

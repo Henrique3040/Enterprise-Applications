@@ -36,8 +36,10 @@
       <li th:each="item : ${cartItems}">
         <h3 th:text="${item.name}">Productnaam</h3>
         <p th:text="${item.description}">Beschrijving</p>
-        <button th:onclick="'/cart/remove/' + ${item.id}">Verwijder</button>
-      </li>
+        <form th:action="@{/cart/remove}" method="post" style="display: inline;">
+          <input type="hidden" name="productId" th:value="${item.id}" />
+          <button type="submit">Verwijder</button>
+        </form>      </li>
     </ul>
     <form th:action="@{/cart/checkout}" method="post" style="margin-top: 20px;">
       <button type="submit">Bevestig Aankoop</button>

@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class CartController {
 
     /*
     *
-    * Endpoint om naar de cart page te geen
+    * Endpoint om naar de cart page
     * */
 
     @GetMapping
@@ -72,7 +69,7 @@ public class CartController {
 
     /*
     *
-    * end pointom items te reserveren
+    * end point om items te reserveren
     * */
     @PostMapping("/checkout")
     public String checkoutCart(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
@@ -91,6 +88,23 @@ public class CartController {
 
             return "cofirmationPage";
     }
+
+
+    /*
+    *
+    * End point om items te verwijderen van cart
+    *
+    * */
+    @PostMapping("/remove")
+    public String deleteItem(@RequestParam Long productId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+        UserModel user = userDetails.getUser();
+        cartService.eraseItem(productId, user.getId());
+        return "redirect:/cart";
+    }
+
 
 
 
