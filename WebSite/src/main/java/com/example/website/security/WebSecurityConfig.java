@@ -62,7 +62,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(httpForm -> {
                     httpForm.loginPage("/login" ).permitAll();
-                    httpForm.defaultSuccessUrl("/items");
+                    httpForm.defaultSuccessUrl("/items", true);
                 })
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers("/register", "/stativ/**","/style.css", "/js/**").permitAll();

@@ -19,8 +19,21 @@ public class UserModel {
     @NotBlank(message = "Email is required")
     private String email;
 
+    @Column(nullable = false)
+    private boolean admin = false;
+
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationModel> reservations = new ArrayList<ReservationModel>() ;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
 
     public Long getId() {
         return id;
