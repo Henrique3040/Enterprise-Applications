@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - View Reports</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>View Reports</h1>
+    <nav>
+        <a href="/items">Home</a>
+        <a href="/admin/itemsBoard">Items</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/reservation" class="active">Reservations</a>
+        <a href="/admin/categories">Categories</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Reservation Reports</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Item Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>User</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.id}">1</td>
+            <td th:text="${reservation.item.name}">Sample Item</td>
+            <td th:text="${reservation.startDate}">2024-01-01</td>
+            <td th:text="${reservation.endDate}">2024-01-10</td>
+            <td th:text="${reservation.user.username}">Sample User</td>
+            <td>
+                <a th:href="@{'/admin/reservation/delete/' + ${reservation.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer>
+    <p>&copy; 2024 Verhuur Platform - Admin Panel</p>
+</footer>
+</body>
+</html>

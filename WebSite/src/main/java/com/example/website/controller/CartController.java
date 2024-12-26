@@ -63,7 +63,7 @@ public class CartController {
         UserModel user = userDetails.getUser();
         cartService.addItemToCart(user.getId(), itemId);
 
-        return "redirect:/cart";
+        return "redirect:/items";
     }
 
 

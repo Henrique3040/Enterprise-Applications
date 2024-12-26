@@ -26,13 +26,15 @@ public class UserModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ReservationModel> reservations = new ArrayList<ReservationModel>() ;
 
-    public boolean isAdmin() {
+    public boolean getAdmin() {
         return admin;
     }
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
+
+
 
 
     public Long getId() {

@@ -24,6 +24,12 @@ public class ItemService {
         this.categoryRepository = categoryRepository;
     }
 
+    public ItemModel getItemById(Long id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found with ID: " + id));
+    }
+
+
     /*
     * Haal alle items van uit de database
     *
@@ -48,6 +54,18 @@ public class ItemService {
     * */
     public List<CategoryModel> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    public void addItem(ItemModel itemModel) {
+        itemRepository.save(itemModel);
+    }
+
+    public void saveItem(ItemModel itemModel) {
+        itemRepository.save(itemModel);
+    }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
     }
 
 }
