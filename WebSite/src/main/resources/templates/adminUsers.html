@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Users</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Manage Users</h1>
+    <nav>
+        <a href="/items">Home</a>
+        <a href="/admin/itemsBoard" >Items</a>
+        <a href="/admin/users" class="active">Users</a>
+        <a href="/admin/reservation">Reservations</a>
+        <a href="/admin/categories">Categories</a>
+    </nav>
+</header>
+
+<main>
+    <h2>User List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">Sample User</td>
+            <td th:text="${user.email}">email@example.com</td>
+            <td th:text="${user.admin}">Admin</td>
+            <td>
+                <a th:href="@{'/admin/users/edit/' + ${user.id}}">Edit</a> |
+                <a th:href="@{'/admin/users/delete/' + ${user.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer>
+    <p>&copy; 2024 Verhuur Platform - Admin Panel</p>
+</footer>
+</body>
+</html>

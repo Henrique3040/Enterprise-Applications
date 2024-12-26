@@ -1,15 +1,14 @@
 package com.example.website.controller;
 
 
-import com.example.website.model.ItemModel;
+import com.example.website.model.UserModel;
+import com.example.website.service.CustomUserDetails;
 import com.example.website.service.ItemService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 @Controller
 public class ItemController {
@@ -26,13 +25,20 @@ public class ItemController {
     *
     * */
     @GetMapping("/items")
-    public String getAllItems(ModelMap model) {
+    public String getAllItems(ModelMap model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-     model.addAttribute("items", itemService.getAllItems());
-     List<ItemModel> items = itemService.getAllItems();
-     model.addAttribute("categories", itemService.getAllCategories());
-     System.out.println("Retrieved items: " + items);
-     return "catalogus";
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
+        UserModel user = userDetails.getUser();
+
+        if (user.getAdmin()) {
+            return "adminBoard";
+        }
+        model.addAttribute("items", itemService.getAllItems());
+        model.addAttribute("categories", itemService.getAllCategories());
+        return "catalogus";
     }
 
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Item</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Add New Item</h1>
+  <nav>
+    <a href="/items">Home</a>
+    <a href="/admin/itemsBoard" class="active">Items</a>
+    <a href="/admin/users">Users</a>
+    <a href="/admin/reservation">Reservations</a>
+    <a href="/admin/categories">Categories</a>
+  </nav>
+</header>
+
+<main>
+  <form th:action="@{/admin/add}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option th:each="category : ${categories}"
+              th:value="${category.id}"
+              th:text="${category.name}">
+      </option>
+    </select>
+    <br>
+    <label for="available">Available:</label>
+    <input type="checkbox" id="available" name="available">
+    <br>
+    <button type="submit">Add Item</button>
+  </form>
+</main>
+<footer>
+  <p>&copy; 2024 Verhuur Platform - Admin Panel</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Item</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Edit Item</h1>
+  <nav>
+    <a href="/items">Home</a>
+    <a href="/admin/itemsBoard" class="active">Items</a>
+    <a href="/admin/users">Users</a>
+    <a href="/admin/reservation">Reservations</a>
+    <a href="/admin/categories">Categories</a>
+  </nav>
+</header>
+
+<main>
+  <form th:action="@{/admin/items/edit}" method="post">
+    <input type="hidden" id="id" name="id" th:value="${item.id}">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" th:value="${item.name}" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:text="${item.description}" required></textarea>
+    <br>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option th:each="category : ${categories}"
+              th:value="${category.id}"
+              th:text="${category.name}"
+              th:selected="${category.id == item.category.id}">
+      </option>
+    </select>
+    <br>
+    <label for="available">Available:</label>
+    <input type="checkbox" id="available" name="available" th:checked="${item.available}">
+    <br>
+    <button type="submit">Save Changes</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2024 Verhuur Platform - Admin Panel</p>
+</footer>
+</body>
+</html>
+

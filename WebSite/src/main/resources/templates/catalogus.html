@@ -10,7 +10,6 @@
 <header>
   <h1>Welkom op het verhuur platform</h1>
   <nav>
-
     <a href="/items" class="active">Catalogus</a>
     <a href="/cart">Winkelmandje</a>
   </nav>
@@ -36,7 +35,7 @@
       <h3 th:text="${item.name}">Productnaam</h3>
       <p th:text="${item.description}">Beschrijving</p>
       <p>Categorie: <span th:text="${item.category.name}">Categorie</span></p>
-      <p>Beschikbaar: <span th:text="${item.available}">Ja/Nee</span></p>
+      <p>Beschikbaar: <span th:text="${item.available ? 'Ja' : 'Nee'}">Ja</span></p>
       <form th:action="@{/cart/add/{itemId}(itemId=${item.id})}" method="post">
         <button type="submit">Voeg toe aan winkelmandje</button>
       </form>

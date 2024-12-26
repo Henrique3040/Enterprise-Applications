@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Manage Items</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Manage Items</h1>
+  <nav>
+    <a href="/items">Home</a>
+    <a href="/admin/itemsBoard" class="active">Items</a>
+    <a href="/admin/users">Users</a>
+    <a href="/admin/reservation">Reservations</a>
+    <a href="/admin/categories">Categories</a>
+  </nav>
+</header>
+<main>
+  <h2>Item List</h2>
+  <a href="/admin/add">Add New Item</a>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Available</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+      <td th:text="${item.id}">1</td>
+      <td th:text="${item.name}">Sample Item</td>
+      <td th:text="${item.description}">Description here</td>
+      <td th:text="${item.category.name}">Category</td>
+      <td th:text="${item.available ? 'Yes' : 'No'}">Yes</td>
+      <td>
+        <a th:href="@{'/admin/edit/' + ${item.id}}">Edit</a> |
+        <a th:href="@{'/admin/delete/' + ${item.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+<footer>
+  <p>&copy; 2024 Verhuur Platform - Admin Panel</p>
+</footer>
+</body>
+</html>

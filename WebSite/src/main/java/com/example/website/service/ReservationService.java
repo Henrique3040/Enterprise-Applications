@@ -20,4 +20,12 @@ public class ReservationService {
         return reservationRepository.findByUser_Id(userId);
     }
 
+    public List<ReservationModel> getAllReservation() {
+        return reservationRepository.findAll();
+    }
+
+    public void deleteReservation(Long reservationId) {
+        reservationRepository.deleteById(reservationId);
+    }
+
 }
