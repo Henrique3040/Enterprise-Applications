@@ -20,6 +20,10 @@
 <main>
     <a href="/admin/categories/add">Add New Category</a>
 
+    <div th:if="${error}">
+        <p th:text="${error}" style="color: red;"></p>
+    </div>
+
     <table>
         <thead>
         <tr>

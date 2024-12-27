@@ -67,7 +67,7 @@ public class WebSecurityConfig {
                     httpForm.defaultSuccessUrl("/items", true);
                 })
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/register", "/stativ/**","/style.css", "/js/**").permitAll();
+                    authorizeRequests.requestMatchers("/register", "/static/**","/style.css", "/js/**").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 })
                 .build();

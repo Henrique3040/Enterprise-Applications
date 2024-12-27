@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CategoryRepository extends CrudRepository<CategoryModel, Long> {
     List<CategoryModel> findAll();
+
+
 }

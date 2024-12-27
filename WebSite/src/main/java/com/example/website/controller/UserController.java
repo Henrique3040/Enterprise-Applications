@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class UserController {
 
-    UserService userService;
-
     @Autowired
-    private UserRepository userRepository;
-
+    UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,10 +22,8 @@ public class UserController {
     @PostMapping(value = "/register", consumes = "application/json")
     public UserModel register(@RequestBody UserModel user) {
 
-        System.out.println("Received User: " + user);
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return userService.save(user);
 
     }
 
