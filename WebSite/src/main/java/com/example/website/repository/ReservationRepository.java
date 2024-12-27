@@ -12,4 +12,6 @@ public interface ReservationRepository extends CrudRepository<ReservationModel, 
     List<ReservationModel> findByUser_Id(Long userId);
 
     List<ReservationModel> findAll();
+
+    boolean existsByItemId(Long itemId);
 }

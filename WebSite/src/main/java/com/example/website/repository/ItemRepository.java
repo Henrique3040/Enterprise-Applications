@@ -14,4 +14,5 @@ public interface ItemRepository extends CrudRepository<ItemModel, Long> {
     public Optional<ItemModel> findById(Long id);
 
     public List<ItemModel> findByCategory_Name(String category);
+
 }

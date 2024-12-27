@@ -50,8 +50,8 @@ public class UserService implements UserDetailsService {
     public void add(UserModel user) {
         userRepository.save(user);
     }
-    public void save(UserModel user) {
-        userRepository.save(user);
+    public UserModel save(UserModel user) {
+        return userRepository.save(user);
     }
     public void deleteById(Long id) {
         userRepository.deleteById(id);

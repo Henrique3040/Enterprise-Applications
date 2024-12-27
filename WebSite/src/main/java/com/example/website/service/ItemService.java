@@ -4,6 +4,7 @@ import com.example.website.model.CategoryModel;
 import com.example.website.model.ItemModel;
 import com.example.website.repository.CategoryRepository;
 import com.example.website.repository.ItemRepository;
+import com.example.website.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class ItemService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
 
     @Autowired
     public ItemService(ItemRepository itemRepository, CategoryRepository categoryRepository) {
@@ -66,6 +70,10 @@ public class ItemService {
 
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
+    }
+
+    public boolean isItemUsedInReservation(Long id) {
+        return reservationRepository.existsByItemId(id);
     }
 
 }

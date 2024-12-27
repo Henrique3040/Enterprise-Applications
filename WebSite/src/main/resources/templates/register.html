@@ -51,14 +51,14 @@
     };
 
     if (password === confirmPassword){
+
       const jsonData = JSON.stringify(data);
-      console.log("Data being sent:", data);
       fetch('/register', {
         method: 'POST',
-        headers:{
-          'Content-Type': 'application/json'
+        headers: {
+          'Content-Type': 'application/json',
         },
-        body:jsonData
+        body: jsonData
       })
               .then(response => {
                 if (response.ok) {
@@ -69,9 +69,10 @@
                 }
               })
               .catch(error => {
-                alert("An error occurred. Please try again.");
                 console.error("Error:", error);
+                alert("An error occurred. Please try again.");
               });
+
     } else {
       alert("Passwords do not match!");
     }

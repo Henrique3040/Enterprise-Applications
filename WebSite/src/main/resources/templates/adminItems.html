@@ -20,6 +20,10 @@
 <main>
   <h2>Item List</h2>
   <a href="/admin/add">Add New Item</a>
+
+  <div th:if="${error}">
+    <p th:text="${error}" style="color: red;"></p>
+  </div>
   <table>
     <thead>
     <tr>

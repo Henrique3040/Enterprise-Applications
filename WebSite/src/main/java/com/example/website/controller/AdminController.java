@@ -124,7 +124,7 @@ public class AdminController {
         existingUser.setAdmin(updatedUser.getAdmin());
 
         // Opslaan in de database
-        userService.save(existingUser);
+        userService.add(existingUser);
 
         return "redirect:/admin/users";
     }
@@ -163,7 +163,7 @@ public class AdminController {
         item.setCategory(categoryRepository.findById(category).orElseThrow());
         item.setAvailable(available);
         itemService.addItem(item);
-        return "redirect:/items";
+        return "redirect:/admin/itemsBoard";
     }
 
     /*
@@ -172,11 +172,28 @@ public class AdminController {
     *
     * */
     @GetMapping("/delete/{id}")
-    public String deleteItem(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String deleteItem(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         UserModel user = userDetails.getUser();
         if (!user.getAdmin()) {
             return "redirect:/items";
         }
+
+
+        /*
+        * deze zorg ervoor dat de app niet crasht als admin
+        * een item probeer te verwijderen die nog gebruikt word
+        *
+        * */
+        boolean isItemUsed = itemService.isItemUsedInReservation(id);
+
+        if (isItemUsed) {
+            // Add an alert or message to the model if the item is in use
+            model.addAttribute("error", "This item is currently in use and cannot be deleted.");
+            return "redirect:/admin/itemsBoard"; // Redirect to the items management page
+        }
+
+
+
         itemService.deleteItem(id);
         return "redirect:/items";
     }
