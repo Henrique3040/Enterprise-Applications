@@ -29,9 +29,6 @@ public class WebSecurityConfig {
     * wachtwoorden en de bijbehorende hashwaarden)
     *
     * */
-
-
-
     @Autowired
     private UserService userService;
 
@@ -48,6 +45,11 @@ public class WebSecurityConfig {
         return provider;
     }
 
+    /*
+    *
+    * Functie dat de encode van de password doet
+    *
+    * */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

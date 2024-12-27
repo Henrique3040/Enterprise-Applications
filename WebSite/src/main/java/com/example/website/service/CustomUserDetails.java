@@ -9,6 +9,14 @@ import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
 
+    /*
+    *CustomUserDetails is nodig omdat Spring Security specifiek met een UserDetails-implementatie werkt.
+    *Door een adapter zoals CustomUserDetails te maken,
+    *kun je Spring Security integreren met jouw UserModel zonder je domeinlogica te vervuilen of je code minder flexibel te maken
+    *
+    *
+    * */
+
     private final UserModel user;
 
     public CustomUserDetails(UserModel user) {
@@ -21,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>(); // Or add roles if needed
+        return new ArrayList<>();
     }
 
     @Override

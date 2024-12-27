@@ -17,6 +17,16 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /*
+    * Laadt een gebruiker op basis van hun gebruikersnaam. Deze methode wordt aangeroepen door Spring Security tijdens de authenticatie.
+    * Als de gebruiker wordt gevonden, wordt een CustomUserDetails-object geretourneerd.
+    * Als de gebruiker niet wordt gevonden, wordt een UsernameNotFoundException gegenereerd.
+    *
+    * @param username de gebruikersnaam van de gebruiker die moet worden opgehaald
+    * @return een UserDetails-object dat de geauthenticeerde gebruiker vertegenwoordigt
+    * @throws UsernameNotFoundException als de gebruiker niet in de database wordt gevonden
+    *
+    * */
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
